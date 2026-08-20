@@ -1,38 +1,32 @@
 package peekra.image_exolorer;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import javafx.application.Application;
 
 /**
- * Unit test for simple App.
+ * Smoke-Test fuer den Einstiegspunkt.
+ *
+ * <p>Die JavaFX-Oberflaeche selbst wird hier nicht gestartet: das braeuchte einen
+ * laufenden FX-Toolkit und ein Display, was auf einem Build-Server nicht gegeben ist.
+ * Geprueft wird daher nur, dass App korrekt als JavaFX-Application aufgesetzt ist.
  */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+class AppTest {
+
+    @Test
+    @DisplayName("App ist eine JavaFX-Application")
+    void appIstJavaFxApplication() {
+        assertTrue(Application.class.isAssignableFrom(App.class),
+                "App muss von javafx.application.Application erben");
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    @DisplayName("App besitzt eine main-Methode als Einstiegspunkt")
+    void appHatMainMethode() throws NoSuchMethodException {
+        assertNotNull(App.class.getMethod("main", String[].class));
     }
 }
